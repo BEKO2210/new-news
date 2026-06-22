@@ -142,7 +142,7 @@ async function getNews() {
   return cachedNews;
 }
 
-const server = http.createServer(async (req, res) => {
+async function handler(req, res) {
   const urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
 
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -195,10 +195,16 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, { 'Content-Type': contentType });
     res.end(content);
   });
-});
+}
 
-server.listen(PORT, () => {
-  console.log(`PulseWire server running at http://localhost:${PORT}`);
-  // Pre-fetch news on startup
-  getNews().then((news) => console.log(`Pre-fetched ${news.length} articles`));
-});
+const server = http.createServer(handler);
+
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`PulseWire server running at http://localhost:${PORT}`);
+    // Pre-fetch news on startup
+    getNews().then((news) => console.log(`Pre-fetched ${news.length} articles`));
+  });
+}
+
+module.exports = handler;
