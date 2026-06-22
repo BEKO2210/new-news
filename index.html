@@ -30,16 +30,29 @@
             mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
-            primary: { DEFAULT: '#DC2626', dark: '#EF4444', foreground: '#FFFFFF' },
-            secondary: { DEFAULT: '#EF4444', dark: '#B91C1C' },
-            accent: { DEFAULT: '#1E40AF', dark: '#60A5FA' },
-            background: { DEFAULT: '#FEF2F2', dark: '#0A0A0A' },
-            foreground: { DEFAULT: '#450A0A', dark: '#F8FAFC' },
-            card: { DEFAULT: '#FFFFFF', dark: '#171717' },
-            'card-foreground': { DEFAULT: '#450A0A', dark: '#F1F5F9' },
-            muted: { DEFAULT: '#F0EDF1', dark: '#262626' },
-            'muted-foreground': { DEFAULT: '#64748B', dark: '#94A3B8' },
-            border: { DEFAULT: '#FECACA', dark: 'rgba(255,255,255,0.08)' },
+            background: 'hsl(var(--background))',
+            foreground: 'hsl(var(--foreground))',
+            card: {
+              DEFAULT: 'hsl(var(--card))',
+              foreground: 'hsl(var(--card-foreground))',
+            },
+            primary: {
+              DEFAULT: 'hsl(var(--primary))',
+              foreground: 'hsl(var(--primary-foreground))',
+            },
+            secondary: {
+              DEFAULT: 'hsl(var(--secondary))',
+              foreground: 'hsl(var(--secondary-foreground))',
+            },
+            accent: {
+              DEFAULT: 'hsl(var(--accent))',
+              foreground: 'hsl(var(--accent-foreground))',
+            },
+            muted: {
+              DEFAULT: 'hsl(var(--muted))',
+              foreground: 'hsl(var(--muted-foreground))',
+            },
+            border: 'hsl(var(--border))',
           },
           animation: {
             'pulse-live': 'pulse-live 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',

@@ -7,6 +7,38 @@
   --glass-bg-dark: rgba(10, 10, 10, 0.78);
   --glass-border-light: rgba(0, 0, 0, 0.06);
   --glass-border-dark: rgba(255, 255, 255, 0.07);
+
+  /* Light theme color tokens */
+  --background: 0 100% 97%;
+  --foreground: 0 76% 16%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 76% 16%;
+  --primary: 0 84% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 84% 60%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 224 76% 40%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 300 10% 95%;
+  --muted-foreground: 215 16% 47%;
+  --border: 0 96% 90%;
+}
+
+.dark {
+  /* Dark theme color tokens */
+  --background: 0 0% 4%;
+  --foreground: 210 40% 98%;
+  --card: 0 0% 9%;
+  --card-foreground: 210 40% 98%;
+  --primary: 0 84% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 80% 41%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 217 91% 75%;
+  --accent-foreground: 0 0% 4%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 215 20% 65%;
+  --border: 0 0% 100% / 0.08;
 }
 
 /* Glassmorphism header */
