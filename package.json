@@ -4,7 +4,7 @@
   "description": "> ⚡ **PulseWire** — Autonome Welt-News, visuell neu erfunden.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node rss-aggregator.js"
   },
   "engines": {
     "node": ">=18.x"
