@@ -5,9 +5,9 @@ const Parser = require('rss-parser');
 
 const PORT = process.env.PORT || 8080;
 const rssParser = new Parser({
-  timeout: 8000,
+  timeout: 4000,
   headers: {
-    'User-Agent': 'PulseWire News Aggregator (localhost)',
+    'User-Agent': 'PulseWire News Aggregator',
   },
   customFields: {
     item: ['media:content', 'enclosure'],
@@ -30,16 +30,10 @@ const FEEDS = [
   { url: 'http://feeds.bbci.co.uk/news/world/rss.xml', source: 'BBC News', category: 'general', lang: 'en' },
   { url: 'https://www.tagesschau.de/xml/rss2/', source: 'tagesschau.de', category: 'general', lang: 'de' },
   { url: 'https://www.spiegel.de/schlagzeilen/index.rss', source: 'SPIEGEL', category: 'general', lang: 'de' },
-  { url: 'https://www.zeit.de/index.xml', source: 'ZEIT ONLINE', category: 'general', lang: 'de' },
   { url: 'https://www.theguardian.com/world/rss', source: 'The Guardian', category: 'general', lang: 'en' },
   { url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', source: 'The New York Times', category: 'general', lang: 'en' },
-  { url: 'https://www.welt.de/feeds/latest.rss', source: 'DIE WELT', category: 'general', lang: 'de' },
-  { url: 'https://feeds.bbci.co.uk/news/business/rss.xml', source: 'BBC Business', category: 'business', lang: 'en' },
   { url: 'https://feeds.bbci.co.uk/news/technology/rss.xml', source: 'BBC Technology', category: 'technology', lang: 'en' },
-  { url: 'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml', source: 'BBC Science', category: 'science', lang: 'en' },
-  { url: 'https://feeds.bbci.co.uk/news/health/rss.xml', source: 'BBC Health', category: 'health', lang: 'en' },
-  { url: 'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml', source: 'BBC Entertainment', category: 'entertainment', lang: 'en' },
-  { url: 'https://feeds.bbci.co.uk/sport/rss.xml', source: 'BBC Sport', category: 'sports', lang: 'en' },
+  { url: 'https://feeds.bbci.co.uk/news/business/rss.xml', source: 'BBC Business', category: 'business', lang: 'en' },
 ];
 
 function inferCategory(text, defaultCategory) {
@@ -75,6 +69,13 @@ function generateId(str) {
   return Math.abs(h).toString(36);
 }
 
+function fetchFeedWithTimeout(feed, ms) {
+  return Promise.race([
+    rssParser.parseURL(feed.url).then((data) => ({ feed, data })),
+    new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms)),
+  ]);
+}
+
 async function fetchNews() {
   const allArticles = [];
   const seen = new Set();
@@ -82,8 +83,7 @@ async function fetchNews() {
   const results = await Promise.allSettled(
     FEEDS.map(async (feed) => {
       try {
-        const data = await rssParser.parseURL(feed.url);
-        return { feed, data };
+        return await fetchFeedWithTimeout(feed, 4000);
       } catch (err) {
         console.error(`RSS feed failed: ${feed.url}`, err.message);
         return null;
